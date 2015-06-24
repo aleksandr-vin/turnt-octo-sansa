@@ -1,0 +1,13 @@
+squid:
+  image: sameersbn/squid:latest
+  ports:
+   - "3128:3128"
+  links:
+   - web
+
+web:
+  build: .
+  ports:
+   - "5000:5000"
+  volumes:
+  - .:/code
