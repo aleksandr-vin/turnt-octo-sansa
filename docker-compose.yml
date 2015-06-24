@@ -4,6 +4,15 @@ squid:
    - "3128:3128"
   links:
    - web
+  volumes_from:
+   - squidlogviewer
+  command: bash -c 'sed -i "s/-d 1/-d 10/" /start ; tail /start; echo "debug_options ALL,1" >>/etc/squid3/squid.conf ; tail /etc/squid3/squid.conf ; /start'
+
+squidlogviewer:
+  image: busybox:latest
+  volumes:
+   - /var/log/squid3
+  command: sh -c 'touch /var/log/squid3.access.log ; tail -f /var/log/squid3/access.log'
 
 web:
   build: .
