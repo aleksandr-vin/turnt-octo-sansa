@@ -6,4 +6,4 @@ app.config.from_object('config')
 
 from app import views
 
-webcache.easy_setup(app)
+#webcache.easy_setup(app)
