@@ -6,6 +6,7 @@ squid:
    - web
   volumes_from:
    - squidlogvolume
+  command: bash -c 'echo "debug_options ALL,1" >>/etc/squid3/squid.conf ; tail /etc/squid3/squid.conf ; /start'
 
 squidlogvolume:
   image: busybox:latest
