@@ -3,7 +3,7 @@ squid:
   ports:
    - "3128:3128"
   links:
-   - web
+   - varnish
   volumes_from:
    - squidlogvolume
   command: bash -c 'echo "debug_options ALL,1" >>/etc/squid3/squid.conf ; tail /etc/squid3/squid.conf ; /start'
@@ -24,6 +24,19 @@ squidcachelog:
   volumes_from:
    - squidlogvolume
   command: sh -c 'touch /var/log/squid3/cache.log ; tail -f /var/log/squid3/cache.log'
+
+varnish:
+  image: million12/varnish:latest
+  links:
+   - web
+  volumes_from:
+   - web
+  ports:
+   - "80:80"
+  environment:
+   - VCL_CONFIG=/code/varnish.vcl
+#   - VARNISHD_PARAMS=""
+#  command: varnishd -d -u varnish -f /code/varnish.vcl -s malloc,64m
 
 web:
   build: .
