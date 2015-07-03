@@ -3,6 +3,7 @@ squid:
   ports:
    - "3128:3128"
   links:
+   - web
    - varnish
   volumes_from:
    - squidlogvolume
